@@ -16,3 +16,14 @@ By maximizing cross-similarity between the deep descriptor of one view and the p
 ## An illustration of training procedure in SPQ
 
 <p align="center"><img src="figures/Illustrated_example.png" width="900"></p>
+
+## How to use
+
+### 1. Install requirements on your environment.
+- PyTorch=1.7.1
+- kornia=0.5.1
+- torchvision=0.8.2
+
+### 2. Preparation.
+- We utilize CIFAR-10 provide by torchvision in this work.
+- We also provide trained <a href="https://drive.google.com/a/snu.ac.kr/file/d/1YDB0aB4NrFbL5ZSaE0PA8GXmiqyQYkHR/view?usp=sharingR">model</a>, extract it to the `/path/to/SPQ-master`.
