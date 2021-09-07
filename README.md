@@ -9,5 +9,5 @@ Supervised deep learning-based hash and vector quantization are enabling fast an
 
 ## Overall Architecture
 
-<p align="center"><img src="figures/Overall_architecture.png" width="900"></p>
+<p align="center"><img src="figures/Concept.png" width="900"></p>
 
