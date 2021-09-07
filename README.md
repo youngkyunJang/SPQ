@@ -11,6 +11,8 @@ Supervised deep learning-based hash and vector quantization are enabling fast an
 
 <p align="center"><img src="figures/Concept.png" width="900"></p>
 
+By maximizing cross-similarity between the deep descriptor of one view and the product quantized descriptor of the other, both codewords and deep descriptors are jointly trained to contain discriminative image content representations in SPQ.
+
 ## Illustarted Example
 
 <p align="center"><img src="figures/Illustrated_example.png" width="900"></p>
