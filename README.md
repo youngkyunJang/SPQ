@@ -27,4 +27,4 @@ By maximizing cross-similarity between the deep descriptor of one view and the p
 
 ### 2. Preparation.
 - We utilize CIFAR-10 provided by torchvision in this work.
-- We distribute trained model, extract it to the `/path/to/SPQ-master`.
+- If you want to use pretrained model, extract it to the `/path/to/SPQ-master`.
