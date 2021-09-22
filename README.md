@@ -21,10 +21,10 @@ By maximizing cross-similarity between the deep descriptor of one view and the p
 
 ### 1. Install requirements on your environment.
 - PyTorch=1.7.1
-- kornia=0.5.1
+- kornia=0.5.10
+- packaging=21.0
 - torchvision=0.8.2
 - tqdm=4.62.2
 
 ### 2. Preparation.
 - We utilize CIFAR-10 provided by torchvision in this work.
-- If you want to use pretrained model, extract it to the `/path/to/SPQ-master`.
