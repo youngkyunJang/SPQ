@@ -17,14 +17,20 @@ By maximizing cross-similarity between the deep descriptor of one view and the p
 
 <p align="center"><img src="figures/Illustrated_example.png" width="900"></p>
 
-## How to use
+## Training
 
-### 1. Install requirements on your environment.
+### Install requirements on your environment.
 - PyTorch=1.7.1
 - kornia=0.5.10
 - packaging=21.0
 - torchvision=0.8.2
 - tqdm=4.62.2
 
-### 2. Preparation.
+### Documentation
+The explanation of arguments to reproduce the models presented in our paper can be found in the `args`, and by simply run:
+```
+python main_SPQ.py --help
+```
+
+### 2. Vanilla SPQ training
 - We utilize CIFAR-10 provided by torchvision in this work.
