@@ -32,7 +32,7 @@ The explanation of arguments to reproduce the models presented in our paper can 
 python main_SPQ.py --help
 ```
 
-### 2. Vanilla SPQ training
+### Vanilla SPQ training
 - We utilize CIFAR-10 provided by torchvision in this work, and if not installed, please set the `--if_downlad=True`.
 - To obtain the retrieval results reported in our paper, you need to train the model over 2,000 epochs with default setup. In order to train the model for 32-bit and compute mAP for every 100-th epoch, please run as:
 ```
