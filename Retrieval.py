@@ -14,6 +14,7 @@ def pqDist_one(C, N_books, g_x, q_x):
     for j in range(N_books):
         for k in range(l1):
             D_C_split[j][k] =T.norm(q_x_split[j]-C_split[j][k], 2)
+            #D_C_split[j][k] = T.norm(q_x_split[j]-C_split[j][k], 2).detach() #for PyTorch version over 1.9
         if j == 0:
             dist = D_C_split[j][g_x_split[j]]
         else:
