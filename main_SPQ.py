@@ -105,11 +105,11 @@ def train_SPQ(args):
         def __init__(self, N_words, N_books, L_word, tau_q):
             super(Quantization_Head, self).__init__()
             self.fc = nn.Linear(512, N_books * L_word, bias=False)
-            nn.init.xavier_normal_(self.fc.weight, gain=0.1)
+            nn.init.xavier_normal_(self.fc.weight, gain=1.0)
 
             # Codebooks
             self.C = T.nn.Parameter(Variable((T.randn(N_words, N_books * L_word)).type(T.float32), requires_grad=True))
-            nn.init.xavier_normal_(self.C, gain=0.1)
+            nn.init.xavier_normal_(self.C, gain=1.0)
 
             self.N_books = N_books
             self.L_word = L_word
