@@ -24,7 +24,6 @@ def get_args_parser():
     parser.add_argument('--Top_N', default=1000, type=int, help="""Top N number of images to be retrieved for evaluation.""")
     
     return parser
-# Cross-quantized contrastive learning training objective
 class CQCLoss(T.nn.Module):
 
     def __init__(self, device, batch_size, tau_cqc):
@@ -32,6 +31,8 @@ class CQCLoss(T.nn.Module):
         self.batch_size = batch_size
         self.tau_cqc = tau_cqc
         self.device = device
+        self.COSSIM = T.nn.CosineSimilarity(dim=-1)
+        self.CE = T.nn.CrossEntropyLoss(reduction="sum")
         self.get_corr_mask = self._get_correlated_mask().type(T.bool)
 
     def _get_correlated_mask(self):
@@ -47,13 +48,13 @@ class CQCLoss(T.nn.Module):
         XaZb = T.cat([Xa, Zb], dim=0)
         XbZa = T.cat([Xb, Za], dim=0)
 
-        Cossim_ab = F.cosine_similarity(XaZb.unsqueeze(1), XaZb.unsqueeze(0), dim=-1)
+        Cossim_ab = self.COSSIM(XaZb.unsqueeze(1), XaZb.unsqueeze(0))
         Rab = T.diag(Cossim_ab, self.batch_size)
         Lab = T.diag(Cossim_ab, -self.batch_size)
         Pos_ab = T.cat([Rab, Lab]).view(2 * self.batch_size, 1)
         Neg_ab = Cossim_ab[self.get_corr_mask].view(2 * self.batch_size, -1)
 
-        Cossim_ba = F.cosine_similarity(XbZa.unsqueeze(1), XbZa.unsqueeze(0), dim=-1)
+        Cossim_ba = self.COSSIM(XbZa.unsqueeze(1), XbZa.unsqueeze(0))
         Rba = T.diag(Cossim_ba, self.batch_size)
         Lba = T.diag(Cossim_ba, -self.batch_size)    
         Pos_ba = T.cat([Rba, Lba]).view(2 * self.batch_size, 1)
@@ -68,8 +69,8 @@ class CQCLoss(T.nn.Module):
 
         labels = T.zeros(2 * self.batch_size).to(self.device).long()
         
-        loss = F.cross_entropy(logits_ab, labels, reduction='mean') + F.cross_entropy(logits_ba, labels, reduction='mean')
-        return loss
+        loss = self.CE(logits_ab, labels) + self.CE(logits_ba, labels)
+        return loss / (2 * self.batch_size)
 
 def train_SPQ(args):
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
@@ -104,12 +105,12 @@ def train_SPQ(args):
     class Quantization_Head(nn.Module):
         def __init__(self, N_words, N_books, L_word, tau_q):
             super(Quantization_Head, self).__init__()
-            self.fc = nn.Linear(512, N_books * L_word, bias=False)
-            nn.init.xavier_normal_(self.fc.weight, gain=1.0)
+            self.fc = nn.Linear(512, N_books * L_word)
+            nn.init.xavier_uniform_(self.fc.weight)
 
             # Codebooks
             self.C = T.nn.Parameter(Variable((T.randn(N_words, N_books * L_word)).type(T.float32), requires_grad=True))
-            nn.init.xavier_normal_(self.C, gain=1.0)
+            nn.init.xavier_uniform_(self.C)
 
             self.N_books = N_books
             self.L_word = L_word
@@ -119,7 +120,7 @@ def train_SPQ(args):
             X = self.fc(input)
             Z = Soft_Quantization(X, self.C, self.N_books, self.tau_q)
             return X, Z
-
+        
     Q = Quantization_Head(N_words, N_books, L_word, tau_q)
     net = nn.Sequential(ResNet_Baseline(BasicBlock, [2, 2, 2, 2]), Q)
 
