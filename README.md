@@ -1,10 +1,10 @@
 ## Self-supervised Product Quantization for Deep Unsupervised Image Retrieval
 Pytorch implementation of SPQ   
-Accepted to ICCV 2021 - <a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Jang_Self-Supervised_Product_Quantization_for_Deep_Unsupervised_Image_Retrieval_ICCV_2021_paper.pdf">paper</a>  
-Young Kyun Jang and Nam Ik Cho  
+Accepted to ICCV 2021 - <a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Jang_Self-Supervised_Product_Quantization_for_Deep_Unsupervised_Image_Retrieval_ICCV_2021_paper.pdf">paper</a>
 
-## Notification
-There is a typo in the paper, t_q should be 0.2 (in this implementation 5.0), because we did division, not multiplication.
+>There is a typo in the paper, t_q should be 0.2 (in this implementation 5.0), because we did division, not multiplication.
+
+Young Kyun Jang and Nam Ik Cho  
 
 ## Abstract
 
